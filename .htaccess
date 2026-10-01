@@ -1,0 +1,35 @@
+# ---------------------------------------------------------------------------
+# GOT FITNEZZ website — shared hosting entry point
+#
+# On Hostinger the whole project is uploaded into public_html. This file sends
+# every request into the /public folder, so the application code (app/),
+# private data (storage/) and documentation are never reachable from the web.
+# ---------------------------------------------------------------------------
+
+Options -Indexes
+DirectoryIndex index.php
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # SSL certificate checks (Let's Encrypt) are served exactly as placed.
+    RewriteRule ^\.well-known/ - [L]
+
+    # Never serve hidden files (.git, .env, .htaccess) or internal folders.
+    RewriteRule (^|/)\. - [R=404,L]
+    RewriteRule ^(app|storage|docs|bin|tests|node_modules)(/|$) - [R=404,L,NC]
+
+    # Everything else is served from /public.
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
+# If mod_rewrite is ever unavailable, refuse to expose the project files.
+<IfModule !mod_rewrite.c>
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</IfModule>

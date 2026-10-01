@@ -1,0 +1,38 @@
+# GOT FITNEZZ — public web root
+
+Options -Indexes -MultiViews
+DirectoryIndex index.php
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Hidden files are never served (except SSL certificate checks).
+    RewriteRule (^|/)\.(?!well-known/) - [R=404,L]
+
+    # Real files (CSS, JS, fonts, images, uploads) are served directly;
+    # everything else goes through the application.
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L,QSA]
+</IfModule>
+
+<IfModule mod_mime.c>
+    AddType font/woff2 .woff2
+    AddType image/webp .webp
+    AddType video/mp4 .mp4
+    AddType video/webm .webm
+    AddType application/manifest+json .webmanifest
+</IfModule>
+
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+    # Versioned assets and uploaded media never change once written.
+    <FilesMatch "\.(css|js|woff2|webp|jpe?g|png|gif|ico|mp4|webm)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+</IfModule>
+
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css text/plain text/csv application/javascript application/json image/svg+xml application/xml
+</IfModule>
