@@ -2,6 +2,12 @@
 
 Website for GOT FITNEZZ, a gym on Trichy Road, Palladam, Tamil Nadu.
 
+![Desktop sections](docs/screenshots/overview-desktop.jpg)
+
+![Phone screens](docs/screenshots/overview-phone.jpg)
+
+Photo slots currently hold designed placeholders until the owner's photos are added.
+
 A cinematic one-page site with custom motion, built with Astro as a static
 site. Hosted on Netlify (Vercel-compatible). There is no CMS: changes are made
 by asking Claude, which edits this repository, shares a preview link and
