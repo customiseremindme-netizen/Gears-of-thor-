@@ -42,36 +42,37 @@ Nothing in the website charges per visitor or per enquiry.
 
 ## 3. Create the database
 
-1. hPanel → **Databases → MySQL Databases** (some accounts call it *Management*).
-2. Create a new database. For example name: `gym`, username: `gym`, and a strong password.
-3. Write down the **full** database name and username shown in the list. Hostinger adds a prefix, for example `u123456789_gym`. The host is `localhost`.
+1. hPanel → **Databases → MySQL Databases**. (Can’t find it? Type “MySQL” in the hPanel search bar.)
+2. Create a new database with a short name such as `gym`. If the form also asks for a username and password, use `gym` and a strong password.
+3. Newer hPanel accounts create the database user automatically and do not ask for a password. In that case, set one: next to the new database’s user, open its options (**⋮** or **›**) → **Change password** → type or generate a strong password → save.
+4. Write down three things exactly as hPanel shows them: the **full** database name and the **full** username (Hostinger adds a prefix, for example `u123456789_gym`), and the password. The host is `localhost`.
 
 ## 4. Upload the website
 
-Choose **one** of these options. Either way, the files must end up **directly inside `public_html`**: you should see `.htaccess`, `app`, `public` and `storage` in `public_html`, not inside a sub-folder.
+The files must end up **directly inside `public_html`**: you should see `.htaccess`, `app`, `public` and `storage` in `public_html`, not inside a sub-folder.
 
-### Option A: Git deployment (recommended, makes updates easy)
-
-1. Make sure `public_html` is empty (delete Hostinger’s default `default.php` or `index.html`).
-2. hPanel → **Advanced → Git**.
-3. Connect your GitHub account when asked, then choose the repository `customiseremindme-netizen/Gears-of-thor-` and the branch with the website.
-4. Leave the install path empty (that means `public_html`) and press **Deploy**.
-5. Optional: switch on **Auto Deployment** and add the webhook it shows to GitHub (repository → Settings → Webhooks), so every update goes live automatically.
-
-### Option B: Upload a ZIP file
+### Upload the ZIP file (recommended)
 
 1. hPanel → **Files → File Manager** → open `public_html`.
-2. Upload `got-fitnezz-website.zip`, then right-click it → **Extract**, and extract it into `public_html`.
-3. Check that `.htaccess`, `app`, `public` and `storage` are now directly in `public_html`. If they are inside an extra folder, open that folder, select everything (including `.htaccess`), **Move** it to `public_html`, then delete the empty folder.
-4. Delete the ZIP file.
+2. Delete Hostinger’s placeholder files there (such as `default.php`, `index.html` or `index.php`).
+3. Press **Upload** and choose `got-fitnezz-website.zip`.
+4. Right-click the ZIP → **Extract**, and extract it into `public_html` itself (no new folder name).
+5. Check that `.htaccess`, `app`, `public` and `storage` are now directly in `public_html`. If they are inside an extra folder, open that folder, select everything (including `.htaccess`), **Move** it to `public_html`, then delete the empty folder.
+6. Delete the ZIP file.
+
+### Alternative: copy it from GitHub
+
+hPanel → **Advanced → Git** can copy the website straight from GitHub (**Connect with GitHub**, choose the repository and branch, deploy into the empty `public_html`), and can then update it automatically every time the code changes.
+
+Only use this after checking that it keeps your settings and photos. Hostinger replaces the files in the folder on each deployment, and its documentation does not say whether files that are not part of the code are kept: `storage/config.php` (your database connection) and the photos in `public/uploads`. Test it first on a spare subdomain: install, upload a photo, deploy a small code change, and confirm the photo and dashboard are still there.
 
 ## 5. Run the installer
 
 1. Visit your domain. You will be taken to the **Set up your website** page.
 2. **Hosting check:** everything should be green. Fix any red item using the hint shown (usually choosing PHP 8.3 under **Advanced → PHP Configuration**).
 3. **Setup code:** for security, open File Manager → `public_html/storage/setup-code.txt`, copy the code and paste it in. This proves you control the hosting, so nobody else can install the site before you.
-4. **Database:** enter the full database name, username and password from step 3. The host stays `localhost`.
-5. **Your login:** your name, email and a password of at least 10 characters.
+4. **Database:** keep **MySQL** selected, then enter the full database name, username and password from step 3. The host stays `localhost`.
+5. **Your login:** your name, email and a password of at least 10 characters. Check **Website address** shows your domain (ideally starting with `https://`).
 6. Press **Install website**, then sign in at `yourdomain.com/admin`.
 
 The installer adds your logo, sharing image and all starting content. It then locks itself and deletes the setup code.
@@ -90,8 +91,8 @@ The installer adds your logo, sharing image and all starting content. It then lo
 
 ## 8. Updating the website code later
 
-- **With Git:** push the update to GitHub, then press **Deploy** in hPanel → Advanced → Git (or let Auto Deployment do it).
-- **With a ZIP:** upload and extract the new ZIP over the old files. Never delete `storage/config.php` or `public/uploads`.
+- **With a ZIP:** ask Claude for the change; Claude updates the code on GitHub and prepares a new `got-fitnezz-website.zip`. Upload it to `public_html` and extract it over the old files, choosing to replace them. Never delete `storage/config.php` or `public/uploads`.
+- **With Git (once tested as described in step 4):** the update goes live when the change reaches the deployed branch on GitHub, or when you press **Deploy** in hPanel → Advanced → Git.
 
 Your content, photos and enquiries are stored in the database and in `public/uploads`, which updates never touch. Any database changes in a new version are applied automatically on the next visit.
 
@@ -121,4 +122,4 @@ Your content, photos and enquiries are stored in the database and in `public/upl
 - **Tests:** `php tests/unit.php` and `bash tests/e2e/run.sh` (needs Node.js and Playwright). Set `DB=mysql DB_NAME=… DB_USER=… DB_PASS=…` to run the browser tests against MySQL.
 - **Nginx (VPS):** set `root /path/to/site/public;` and `try_files $uri /index.php?$query_string;`, pass `.php` to PHP-FPM, and add `location ~* ^/uploads/.*\.(php|phtml|html?|svg|js)$ { deny all; }`.
 
-Sources used to check Hostinger’s plan features (October 2026): [Node.js hosting options](https://www.hostinger.com/support/?p=8903), [Deploy a Git repository](https://www.hostinger.com/support/1583302-how-to-deploy-a-git-repository-in-hostinger/), [Website Builder vs other platforms](https://www.hostinger.com/support/6618476-what-s-the-difference-between-hostinger-website-builder-and-other-content-management-systems/), [PHP upload size](https://www.hostinger.com/in/tutorials/?p=748).
+Sources used to check Hostinger’s plan features (October 2026): [Node.js hosting options](https://www.hostinger.com/support/?p=8903), [Deploy a Git repository](https://www.hostinger.com/support/1583302-how-to-deploy-a-git-repository-in-hostinger/), [Website Builder vs other platforms](https://www.hostinger.com/support/6618476-what-s-the-difference-between-hostinger-website-builder-and-other-content-management-systems/), [PHP upload size](https://www.hostinger.com/in/tutorials/?p=748), [Git deployment](https://docs.hostinger.com/websites/git), [Databases](https://docs.hostinger.com/websites/databases).
