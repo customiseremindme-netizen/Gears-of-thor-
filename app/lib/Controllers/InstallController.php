@@ -33,8 +33,8 @@ final class InstallController
             foreach (array_keys($values) as $key) {
                 $values[$key] = Request::post($key, $values[$key]);
             }
-            $sent = strtoupper(preg_replace('/\s+/', '', Request::post('setup_code')));
-            if ($code === null || !hash_equals($code, $sent)) {
+            $sent = Installer::normalizeCode(Request::post('setup_code'));
+            if ($code === null || $sent === '' || !hash_equals(Installer::normalizeCode($code), $sent)) {
                 $errors['setup_code'] = 'That setup code does not match. Open storage/setup-code.txt in File Manager and copy the code exactly.';
                 usleep(400000);
             } elseif (!Installer::ready()) {

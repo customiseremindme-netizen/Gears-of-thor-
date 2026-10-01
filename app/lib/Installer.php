@@ -27,6 +27,17 @@ final class Installer
         return $code !== '' ? $code : null;
     }
 
+    /**
+     * Setup codes are compared without dashes, spaces or hidden characters,
+     * and look-alike letters count as the digits they resemble (codes only
+     * contain 0–9 and A–F), so a careful retype or a messy paste still works.
+     */
+    public static function normalizeCode(string $code): string
+    {
+        $code = strtr(strtoupper($code), ['O' => '0', 'I' => '1', 'L' => '1']);
+        return (string) preg_replace('/[^0-9A-F]/', '', $code);
+    }
+
     /** @return array<int, array{label: string, ok: bool, detail: string, required: bool}> */
     public static function requirements(): array
     {

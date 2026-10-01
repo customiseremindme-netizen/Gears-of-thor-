@@ -14,6 +14,7 @@ use Got\Csv;
 use Got\EnquiryForm;
 use Got\FormToken;
 use Got\Hours;
+use Got\Installer;
 use Got\Markdown;
 use Got\Sanitizer;
 use Got\Schema;
@@ -76,6 +77,12 @@ check('token too fast', FormToken::check(FormToken::issue($now), $now + 1) === '
 check('token expired', FormToken::check(FormToken::issue($now - FormToken::MAX_AGE - 5), $now) === 'expired');
 check('token tampered', FormToken::check(substr($token, 0, -1) . (substr($token, -1) === 'a' ? 'b' : 'a'), $now) === 'invalid');
 check('token garbage', FormToken::check('nonsense', $now) === 'invalid');
+
+// Setup code ----------------------------------------------------------------------
+check('setup code exact', Installer::normalizeCode('7F3A-09C2-B4E1') === '7F3A09C2B4E1');
+check('setup code forgiving', Installer::normalizeCode(" 7f3a–o9c2 b4e1\n") === '7F3A09C2B4E1');
+check('setup code hidden characters', Installer::normalizeCode("\u{FEFF}7F3A\u{00A0}09C2\u{200B}-B4E1") === '7F3A09C2B4E1');
+check('setup code empty', Installer::normalizeCode('  -- ') === '');
 
 // Hours -------------------------------------------------------------------------
 $days = Content::defaults()['hours']['days'];
