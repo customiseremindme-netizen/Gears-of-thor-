@@ -1,0 +1,32 @@
+---
+/**
+ * A responsive photo from the image slots in src/content/images.ts.
+ * Generates AVIF and WebP in several widths; the browser picks the best one.
+ */
+import { Picture } from 'astro:assets'
+import { images, type ImageKey } from '../content/images'
+interface Props {
+  name: ImageKey
+  sizes: string
+  class?: string
+  priority?: boolean
+  widths?: number[]
+}
+const { name, sizes, class: cls, priority = false, widths = [480, 800, 1200, 1600, 2000, 2560] } = Astro.props
+const img = images[name]
+const usable = widths.filter((w) => w <= img.src.width)
+if (!usable.includes(img.src.width) && img.src.width < widths[widths.length - 1]) usable.push(img.src.width)
+---
+<Picture
+  src={img.src}
+  alt={img.alt}
+  widths={usable}
+  sizes={sizes}
+  formats={['avif', 'webp']}
+  class={cls}
+  loading={priority ? 'eager' : 'lazy'}
+  fetchpriority={priority ? 'high' : 'auto'}
+  decoding={priority ? 'sync' : 'async'}
+  style={`object-position:${img.position}`}
+  draggable="false"
+/>

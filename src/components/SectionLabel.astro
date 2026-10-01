@@ -1,0 +1,6 @@
+---
+/** "(01) About ———" label above a section heading; the rule draws in when revealed. */
+interface Props { index: string; label: string; class?: string }
+const { index, label, class: cls } = Astro.props
+---
+<p class:list={['label', cls]} data-reveal="fade"><span class="label__index">({index})</span><span>{label}</span><span class="label__rule" aria-hidden="true"></span></p>

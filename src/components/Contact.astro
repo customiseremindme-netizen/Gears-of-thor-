@@ -1,0 +1,54 @@
+---
+/**
+ * Contact details with working call, Instagram and directions links.
+ * There is no enquiry form yet: it will be switched on once a form service
+ * is connected on the host (see CLAUDE.md → "Enquiry form").
+ */
+import SplitHeading from './SplitHeading.astro'
+import SectionLabel from './SectionLabel.astro'
+import Button from './Button.astro'
+import Icon from './Icon.astro'
+import { site } from '../content/site'
+const s = site.contactSection
+const c = site.contact
+---
+<section class="contact section" id="contact" aria-labelledby="contact-title">
+  <div class="container contact__grid">
+    <div class="contact__head">
+      <SectionLabel index={s.index} label={s.eyebrow} />
+      <SplitHeading text={s.heading} class="display display--xl" id="contact-title" />
+      <p class="lead contact__lead" data-reveal="up">{s.text}</p>
+    </div>
+
+    <ul class="contact__rows">
+      <li class="contact__row" data-reveal="up">
+        <span class="contact__key"><Icon name="pin" />{s.addressLabel}</span>
+        <address class="contact__value">{c.address.street}<br />{c.address.locality}, {c.address.region} {c.address.postalCode}</address>
+        <a class="text-link" href={c.directionsUrl} target="_blank" rel="noopener">
+          <span class="link-line">{s.directionsLabel}</span><Icon name="arrow-up-right" /><span class="visually-hidden"> (opens Google Maps)</span>
+        </a>
+      </li>
+      <li class="contact__row" data-reveal="up" style="--d:1">
+        <span class="contact__key"><Icon name="phone" />{s.phoneLabel}</span>
+        <a class="contact__value contact__value--link" href={c.phoneHref}>{c.phoneDisplay}</a>
+        <a class="text-link" href={c.phoneHref}><span class="link-line">{s.callLabel}</span><Icon name="arrow" /></a>
+      </li>
+      <li class="contact__row" data-reveal="up" style="--d:2">
+        <span class="contact__key"><Icon name="instagram" />{s.instagramLabel}</span>
+        <a class="contact__value contact__value--link" href={c.instagramUrl} target="_blank" rel="noopener">{c.instagramHandle}</a>
+        <a class="text-link" href={c.instagramUrl} target="_blank" rel="noopener">
+          <span class="link-line">{s.instagramAction}</span><Icon name="arrow-up-right" /><span class="visually-hidden"> (opens in a new tab)</span>
+        </a>
+      </li>
+    </ul>
+
+    <aside class="contact__panel" aria-label="Call the gym" data-reveal="panel">
+      <SplitHeading text={s.panelHeading} as="p" class="display display--l contact__panel-title" reveal="none" />
+      <a class="contact__phone display" href={c.phoneHref}>{c.phoneDisplay}</a>
+      <div class="contact__panel-actions">
+        <Button href={c.phoneHref} variant="ink" icon="phone">{s.callLabel}</Button>
+        <Button href={c.directionsUrl} variant="outline-ink" icon="arrow-up-right" external>{s.directionsLabel}</Button>
+      </div>
+    </aside>
+  </div>
+</section>

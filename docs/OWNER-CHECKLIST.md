@@ -1,44 +1,32 @@
-# Owner checklist — information still needed
+# Owner checklist
 
-The website only shows information that is confirmed. Everything below is either **hidden until you confirm it** or **not on the site at all** until you add the real details. The dashboard has a live version of this list under **Owner checklist**, with a button to fix each item.
+Details on the website that need your confirmation, and things only you can
+supply. Tell Claude the answers in plain language and it will update the site.
 
-## Already in place
+## Confirm before connecting your domain
+
+| Item | On the site now | Please confirm or correct |
+| --- | --- | --- |
+| Address | 30A, First Floor, Trichy Road, Palladam, Tamil Nadu 641664 | Is this exactly right? |
+| Phone | +91 86086 11123 (Call buttons) | Is this the number customers should call? |
+| Instagram | https://www.instagram.com/got_fitnezz/ | Correct account? |
+| Directions | Google Maps search for the address | Send your Google Maps link if the pin should be exact. |
+
+## Not shown until you confirm
 
 | Item | Status |
 | --- | --- |
-| Logo | ✅ Your original logo, unchanged. For the dark design it uses the white outline from your own dark-background version. The original file is kept in `docs/brand/`. |
-| Accent colour | ✅ `#D8E12A`, taken from the lime shield in your logo (replaces the proposed `#D7FF3F`). Change it in Logo & colours. |
-| Address | ✅ 30A, First Floor, Trichy Road, Palladam, Tamil Nadu 641664 |
-| Instagram | ✅ https://www.instagram.com/got_fitnezz/ |
-| Phone | ✅ +91 86086 11123, from public listings. **Please check it is the number you want callers to use.** |
+| Opening hours | Listed hours (Mon–Sat 5:30–9:30 AM and 5:30–9:30 PM; Sun 7–9:30 AM and 6–8:30 PM) are not shown until you confirm them. |
+| WhatsApp | Not shown. Tell us the number if WhatsApp messages are answered. |
+| Training beyond Strength, Cardio and Gym Training | Not shown. CrossFit is not mentioned, to avoid implying official affiliation. |
+| Prices, offers, trial sessions | Not shown. |
+| Trainers, reviews, member stories | Not shown. Need real details plus each person's permission. |
+| Enquiry form | Not connected yet; visitors call or use Instagram. Can be switched on once the site is on Netlify. |
 
-## Please confirm (pre-filled, hidden until confirmed)
+## Photos and videos
 
-| Item | What we have | Where to confirm |
-| --- | --- | --- |
-| Opening hours | Mon–Sat 5:30–9:30 AM & 5:30–9:30 PM; Sun 7–9:30 AM & 6–8:30 PM (from listings) | Business info & hours → tick “These hours are correct” |
-| Training options | Shown with draft copy: Strength Training, Cardio, Gym Training. Hidden drafts: Functional Training, Personal Training, Nutrition Guidance. “CrossFit” is not used anywhere. | Page sections → Training |
-| Facilities | Hidden drafts: air-conditioned, lockers, parking, changing rooms, drinking water | Page sections → The Gym → Facilities |
-| WhatsApp | No number yet. The button appears only after you add it and switch it on. | Business info & hours |
-| Privacy notice | Written from how the website really handles enquiries. Please read it and adjust. | Page sections → Privacy notice |
-
-## Please send or add when ready (sections stay hidden until then)
-
-| Item | Notes |
-| --- | --- |
-| Hero photo or video of the gym | Wide photo, 1920 px or larger; video MP4, 10–20 s, no sound, under 15 MB |
-| Gym photos (6 or more) | Equipment, training areas, entrance. Only people who agreed to appear. |
-| About section photo | Any strong photo of the gym |
-| Google Maps share link | For exact directions |
-| Membership plans and prices | Plan names, prices, durations, what’s included. Until then: “Ask About Membership” only. |
-| Trial offer | Not mentioned anywhere unless you confirm one exists |
-| Coaches | Real photos, names, roles; qualifications only once you have checked them |
-| Member reviews | Exact wording, member’s permission, where it was posted |
-| Transformation stories | Member’s written consent for the story and photos |
-| Email address for the website (optional) | Shown on the site if added |
-| Enquiry alert email | Dashboard → Settings |
-| Final domain | Dashboard → Settings → Website address (after connecting it in Hostinger) |
-
-## Deliberately not on the website
-
-So that nothing unverified is published, the website does **not** contain: ratings or star scores, member counts, awards, reply-time promises, free-trial offers, an implied CrossFit affiliation, stock photos presented as your trainers or members, or any invented prices, trainers, reviews or results.
+All picture slots hold designed placeholders. Send your photos and videos
+(phone photos are fine; landscape for wide slots, portrait for tall ones) and
+say which you own or have permission to use. See `docs/IMAGES.md` for the
+list of slots. Add `?slots` to the end of a preview link to see which photo
+goes where.

@@ -1,0 +1,63 @@
+---
+import '@fontsource/league-gothic/latin.css'
+import '@fontsource/league-gothic/latin-ext.css'
+import '@fontsource-variable/instrument-sans/index.css'
+import '../styles/tokens.css'
+import '../styles/global.css'
+import displayFont from '@fontsource/league-gothic/files/league-gothic-latin-400-normal.woff2?url'
+import bodyFont from '@fontsource-variable/instrument-sans/files/instrument-sans-latin-wght-normal.woff2?url'
+import { site } from '../content/site'
+
+interface Props {
+  title?: string
+  description?: string
+  noindex?: boolean
+  jsonLd?: Record<string, unknown> | null
+}
+const { title = site.seo.title, description = site.seo.description, noindex = false, jsonLd = null } = Astro.props
+
+// Netlify sets CONTEXT, Vercel sets VERCEL_ENV. Previews are kept out of search engines.
+const deployContext = process.env.CONTEXT ?? process.env.VERCEL_ENV ?? 'production'
+const hideFromSearch = noindex || deployContext !== 'production'
+const canonical = new URL(Astro.url.pathname, Astro.site).href
+const ogImage = new URL('/og-image.jpg', Astro.site).href
+---
+<!doctype html>
+<html lang="en-IN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {hideFromSearch && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content={site.seo.themeColor} />
+    <meta name="format-detection" content="telephone=no" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.brand.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="en_IN" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${site.brand.name} — ${site.brand.expanded}, Palladam`} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="preload" href={displayFont} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={bodyFont} as="font" type="font/woff2" crossorigin />
+    <slot name="head" />
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <slot />
+    <script>
+      import '../scripts/main.ts'
+    </script>
+  </body>
+</html>

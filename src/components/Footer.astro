@@ -1,0 +1,28 @@
+---
+import { Image } from 'astro:assets'
+import logo from '../assets/brand/logo.png'
+import { site } from '../content/site'
+const c = site.contact
+const year = new Date().getFullYear()
+---
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <Image src={logo} alt={site.brand.logoAlt} widths={[160, 320]} sizes="140px" class="footer__logo" />
+      <p>{site.footer.tagline}</p>
+    </div>
+    <nav class="footer__nav" aria-label="Footer">
+      <ul>{site.nav.map((item) => <li><a class="link-line" href={item.href}>{item.label}</a></li>)}</ul>
+    </nav>
+    <div class="footer__contact">
+      <address>{c.address.street}<br />{c.address.locality}, {c.address.region} {c.address.postalCode}</address>
+      <p><a class="link-line" href={c.phoneHref}>{c.phoneDisplay}</a></p>
+      <p><a class="link-line" href={c.instagramUrl} target="_blank" rel="noopener">Instagram {c.instagramHandle}</a></p>
+    </div>
+  </div>
+  <div class="container footer__base">
+    <p>© {year} {site.brand.name} — {site.brand.expanded}</p>
+    {site.footer.imageNote && <p>{site.footer.imageNote}</p>}
+    <a class="link-line" href="#top">Back to top</a>
+  </div>
+</footer>

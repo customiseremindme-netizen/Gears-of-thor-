@@ -1,0 +1,55 @@
+---
+/**
+ * Desktop: a sticky image beside three training descriptions; the image
+ * changes as each description becomes active. Mobile: a simple vertical list.
+ */
+import Pic from './Pic.astro'
+import SplitHeading from './SplitHeading.astro'
+import SectionLabel from './SectionLabel.astro'
+import Icon from './Icon.astro'
+import { site } from '../content/site'
+import { images, type ImageKey } from '../content/images'
+const t = site.training
+const total = String(t.items.length).padStart(2, '0')
+---
+<section class="training section" id="training" aria-labelledby="training-title">
+  <div class="container">
+    <div class="training__head">
+      <SectionLabel index={t.index} label={t.eyebrow} />
+      <SplitHeading text={t.heading} class="display display--xl" id="training-title" />
+    </div>
+
+    <div class="training__layout" data-training>
+      <div class="training__media" aria-hidden="true">
+        <div class="training__stack">
+          {t.items.map((item, i) => (
+            <div class:list={['training__shot', { 'is-shown': i === 0 }]} data-shot={i} style={`--z:${i + 1}`} data-slot={item.image} data-slot-brief={images[item.image as ImageKey].brief}>
+              <Pic name={item.image as ImageKey} sizes="(min-width: 1024px) 44vw, 1px" class="training__shot-img" />
+            </div>
+          ))}
+        </div>
+        <div class="training__count">
+          <span data-training-current>01</span><span class="training__count-sep"></span><span>{total}</span>
+        </div>
+      </div>
+
+      <ol class="training__list">
+        {t.items.map((item, i) => (
+          <li class:list={['training__item', { 'is-active': i === 0 }]} data-training-item={i}>
+            <div class="training__item-media frame" data-reveal="image" data-slot={item.image} data-slot-brief={images[item.image as ImageKey].brief}>
+              <Pic name={item.image as ImageKey} sizes="(max-width: 1023px) 92vw, 1px" class="frame__img" />
+            </div>
+            <div class="training__item-body">
+              <span class="training__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="display display--l training__title" data-reveal="up">{item.title}</h3>
+              <p class="training__text" data-reveal="up" style="--d:1">{item.text}</p>
+              <a class="text-link" href={t.link.href} data-reveal="up" style="--d:2">
+                <span class="link-line">{t.link.label}</span><Icon name="arrow" />
+              </a>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>

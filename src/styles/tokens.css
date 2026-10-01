@@ -1,0 +1,57 @@
+/* ==========================================================================
+   DESIGN TOKENS: colours, type, spacing and motion in one place.
+   Change a value here and it updates across the whole site.
+   ========================================================================== */
+
+:root {
+  /* Colours. The accent is sampled from the lit half of the shield in the
+     GOT FITNEZZ logo (#D8E12A); the deep accent from its shaded half. */
+  --c-ink: #0b0b0a;          /* page background */
+  --c-ink-2: #121210;        /* raised dark surface */
+  --c-ink-3: #1c1c19;        /* cards, frames */
+  --c-bone: #f2efe8;         /* main text: warm white */
+  --c-bone-2: #bdb8ad;       /* secondary text */
+  --c-bone-3: #8a867d;       /* captions, small print */
+  --c-line: rgb(242 239 232 / 0.14);
+  --c-line-strong: rgb(242 239 232 / 0.32);
+  --c-lime: #d8e12a;         /* accent: use sparingly */
+  --c-lime-deep: #c4cc34;
+  --c-on-lime: #0b0b0a;
+
+  /* Typography */
+  --font-display: 'League Gothic', 'Arial Narrow', 'Helvetica Neue Condensed', Impact, sans-serif;
+  --font-body: 'Instrument Sans Variable', 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+
+  --fs-hero: clamp(3rem, 16.4vw, 15.5rem);
+  --fs-xxl: clamp(4.4rem, 12.5vw, 13rem);
+  --fs-xl: clamp(3.3rem, 8.8vw, 9.5rem);
+  --fs-l: clamp(2.6rem, 4.6vw, 4.75rem);
+  --fs-lead: clamp(1.15rem, 1.05rem + 0.55vw, 1.55rem);
+  --fs-body: 1.0625rem;
+  --fs-small: 0.875rem;
+  --fs-label: 0.75rem;
+
+  /* Layout */
+  --container: 1520px;
+  --gutter: clamp(20px, 4.4vw, 72px);
+  --section-y: clamp(104px, 13vw, 210px);
+  --header-h: 84px;
+  --grid-gap: clamp(16px, 2vw, 32px);
+
+  /* Motion: one easing family and a small set of durations. */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 0.25s;
+  --dur-base: 0.5s;
+  --dur-reveal: 1s;
+  --dur-slow: 1.4s;
+  --stagger: 0.09s;
+  --rise: 28px;                /* how far text moves when it appears */
+}
+
+@media (max-width: 760px) {
+  :root {
+    --header-h: 68px;
+    --rise: 18px;
+  }
+}

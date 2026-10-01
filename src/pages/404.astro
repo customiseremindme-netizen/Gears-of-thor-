@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro'
+import SplitHeading from '../components/SplitHeading.astro'
+import Button from '../components/Button.astro'
+import { site } from '../content/site'
+---
+<Base title={`Page not found | ${site.brand.name}`} noindex>
+  <main id="main" class="notfound" tabindex="-1">
+    <div class="container">
+      <p class="label"><span class="label__index">(404)</span> Page not found</p>
+      <SplitHeading text={'THIS PAGE\nSKIPPED *LEG DAY.*'} as="h1" class="display display--xl" reveal="load" />
+      <p class="lead">The page you were looking for isn’t here.</p>
+      <div class="notfound__actions">
+        <Button href="/" variant="primary">Back to the home page</Button>
+        <Button href={site.contact.phoneHref} variant="ghost" icon="phone">{site.contact.phoneDisplay}</Button>
+      </div>
+    </div>
+  </main>
+</Base>

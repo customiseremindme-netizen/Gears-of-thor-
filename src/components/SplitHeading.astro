@@ -1,0 +1,22 @@
+---
+/**
+ * A display heading split into masked lines for the line-by-line reveal.
+ * "\n" in the text starts a new line; *word* is shown in the accent colour.
+ */
+import Accent from './Accent.astro'
+interface Props {
+  text: string
+  as?: 'h1' | 'h2' | 'h3' | 'p'
+  class?: string
+  /** 'scroll' reveals when scrolled into view; 'load' animates on page load (hero). */
+  reveal?: 'scroll' | 'load' | 'none'
+  id?: string
+}
+const { text, as: Tag = 'h2', class: cls = '', reveal = 'scroll', id } = Astro.props
+const lines = text.split('\n').map((l) => l.trim()).filter(Boolean)
+---
+<Tag class:list={['split', cls]} data-reveal={reveal === 'scroll' ? 'lines' : undefined} data-load={reveal === 'load' ? '' : undefined} id={id}>
+  {lines.map((line, i) => (
+    <span class="line"><span class="line__inner" style={`--i:${i}`}><Accent text={line} /></span></span>
+  ))}
+</Tag>

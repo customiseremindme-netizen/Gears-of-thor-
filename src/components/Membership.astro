@@ -1,0 +1,23 @@
+---
+import Pic from './Pic.astro'
+import SplitHeading from './SplitHeading.astro'
+import SectionLabel from './SectionLabel.astro'
+import Button from './Button.astro'
+import { site } from '../content/site'
+import { images } from '../content/images'
+const m = site.membership
+---
+<section class="membership" id="membership" aria-labelledby="membership-title" data-scrub="pass">
+  <div class="membership__frame" data-slot="membership" data-slot-brief={images.membership.brief}>
+    <Pic name="membership" sizes="100vw" class="membership__img" />
+    <div class="membership__shade" aria-hidden="true"></div>
+  </div>
+  <div class="membership__content container">
+    <SectionLabel index={m.index} label={m.eyebrow} />
+    <SplitHeading text={m.heading} class="display display--xxl" id="membership-title" />
+    <div class="membership__foot">
+      <p class="lead" data-reveal="up">{m.text}</p>
+      <Button href={m.cta.href} variant="primary" data-reveal="up" style="--d:1">{m.cta.label}</Button>
+    </div>
+  </div>
+</section>

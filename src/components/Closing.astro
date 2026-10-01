@@ -1,0 +1,16 @@
+---
+import Accent from './Accent.astro'
+import Button from './Button.astro'
+import { site } from '../content/site'
+const c = site.closing
+const lines = c.line.split('\n')
+---
+<section class="closing" aria-label={c.line.replace(/[*\n]/g, ' ').replace(/\s+/g, ' ').trim()} data-scrub="pass">
+  <p class="closing__words display" aria-hidden="true">
+    {lines.map((line, i) => <span class={`closing__line closing__line--${i + 1}`}><Accent text={line} /></span>)}
+  </p>
+  <div class="container closing__actions" data-reveal="up">
+    <Button href={site.contact.phoneHref} variant="primary" icon="phone">{c.callLabel} · {site.contact.phoneDisplay}</Button>
+    <Button href="#contact" variant="ghost">{c.enquireLabel}</Button>
+  </div>
+</section>

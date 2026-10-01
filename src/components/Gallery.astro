@@ -1,0 +1,76 @@
+---
+/**
+ * Gallery with staggered reveals, hover zoom and an accessible lightbox.
+ * Wording switches between "MAKE TIME TO MOVE" (editorial imagery) and
+ * "STEP INSIDE GOT." (genuine GOT FITNEZZ photos) via site.gallery.genuine.
+ */
+import { getImage } from 'astro:assets'
+import Pic from './Pic.astro'
+import SplitHeading from './SplitHeading.astro'
+import SectionLabel from './SectionLabel.astro'
+import Button from './Button.astro'
+import Icon from './Icon.astro'
+import { site } from '../content/site'
+import { images, type ImageKey } from '../content/images'
+const g = site.gallery
+const copy = g.genuine ? g.genuineCopy : g.editorialCopy
+const items = await Promise.all(
+  g.images.map(async (name) => {
+    const img = images[name as ImageKey]
+    const large = await getImage({ src: img.src, width: Math.min(2000, img.src.width), format: 'webp' })
+    return { name: name as ImageKey, img, large: large.src }
+  }),
+)
+---
+<section class="gallery section" id="space" aria-labelledby="gallery-title">
+  <div class="container">
+    <div class="gallery__head">
+      <SectionLabel index={g.index} label={g.eyebrow} />
+      <SplitHeading text={copy.heading} class="display display--xl" id="gallery-title" />
+      <div class="gallery__intro">
+        <p class="lead" data-reveal="up">{copy.text}</p>
+        <div class="gallery__actions" data-reveal="up" style="--d:1">
+          <Button href={site.contact.instagramUrl} variant="ghost" icon="arrow-up-right" external>{g.instagramLabel}</Button>
+          <a class="text-link" href={site.contact.directionsUrl} target="_blank" rel="noopener">
+            <span class="link-line">{g.directionsLabel}</span><Icon name="arrow-up-right" />
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <ul class="gallery__grid" data-gallery>
+      {items.map((item, i) => (
+        <li class={`gallery__cell gallery__cell--${i + 1}`}>
+          <button
+            type="button"
+            class="gallery__item frame"
+            data-reveal="image"
+            style={`--d:${i % 2}`}
+            data-lightbox-item={i}
+            data-full={item.large}
+            data-alt={item.img.alt}
+            data-slot={item.name}
+            data-slot-brief={item.img.brief}
+            aria-label={`Open image ${i + 1} of ${items.length}${item.img.alt ? `: ${item.img.alt}` : ''}`}
+          >
+            <Pic name={item.name} sizes="(min-width: 1024px) 50vw, 92vw" class="frame__img" />
+            <span class="gallery__zoom" aria-hidden="true"><Icon name="plus" /></span>
+          </button>
+        </li>
+      ))}
+    </ul>
+    {!g.genuine && <p class="gallery__note" data-reveal="fade">{g.editorialNote}</p>}
+  </div>
+
+  <dialog class="lightbox" data-lightbox aria-label="Image viewer">
+    <div class="lightbox__inner">
+      <figure class="lightbox__figure">
+        <img class="lightbox__img" alt="" data-lightbox-img />
+        <figcaption class="lightbox__caption"><span data-lightbox-count></span> <span data-lightbox-caption></span></figcaption>
+      </figure>
+      <button type="button" class="lightbox__btn lightbox__close" data-lightbox-close aria-label="Close image viewer"><Icon name="close" /></button>
+      <button type="button" class="lightbox__btn lightbox__prev" data-lightbox-prev aria-label="Previous image"><Icon name="prev" /></button>
+      <button type="button" class="lightbox__btn lightbox__next" data-lightbox-next aria-label="Next image"><Icon name="next" /></button>
+    </div>
+  </dialog>
+</section>

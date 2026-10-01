@@ -1,0 +1,27 @@
+# Generated on the server by the installer — never commit secrets or data
+/storage/config.php
+/storage/setup-code.txt
+/storage/recovery.txt
+/storage/database/*
+!/storage/database/.gitkeep
+!/storage/database/.htaccess
+/storage/logs/*
+!/storage/logs/.gitkeep
+/storage/cache/*
+!/storage/cache/.gitkeep
+/storage/sessions/*
+!/storage/sessions/.gitkeep
+
+# Uploaded photos and videos live only on the server
+/public/uploads/*
+!/public/uploads/.htaccess
+!/public/uploads/index.html
+
+# Local tooling
+/node_modules/
+/tests/e2e/output/
+/dist/
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

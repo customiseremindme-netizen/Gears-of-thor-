@@ -1,0 +1,8 @@
+---
+import Icon from './Icon.astro'
+import { site } from '../content/site'
+---
+<div class="mobile-bar" data-mobile-bar aria-label="Quick contact" role="region">
+  <a class="mobile-bar__btn mobile-bar__btn--call" href={site.contact.phoneHref}><Icon name="phone" />{site.mobileBar.call}</a>
+  <a class="mobile-bar__btn" href="#contact">{site.mobileBar.enquire}<Icon name="arrow" /></a>
+</div>

@@ -1,0 +1,21 @@
+---
+/**
+ * The signature image: starts as an inset frame and opens to full width as
+ * the visitor scrolls (see src/scripts/scrub.ts).
+ */
+import Pic from './Pic.astro'
+import Accent from './Accent.astro'
+import { site } from '../content/site'
+import { images } from '../content/images'
+const s = site.signature
+---
+<section class="signature" aria-label={s.words.replace(/\*/g, '')} data-scrub="sticky">
+  <div class="signature__sticky">
+    <div class="signature__frame" data-slot="signature-wide" data-slot-brief={images['signature-wide'].brief}>
+      <Pic name="signature-wide" sizes="100vw" class="signature__img" />
+      <div class="signature__shade" aria-hidden="true"></div>
+    </div>
+    <p class="signature__words display" aria-hidden="true"><Accent text={s.words} /></p>
+    <p class="signature__caption"><span class="label__index">({s.index})</span> {s.caption}</p>
+  </div>
+</section>

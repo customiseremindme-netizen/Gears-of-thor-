@@ -1,0 +1,38 @@
+---
+import { getImage } from 'astro:assets'
+import Pic from './Pic.astro'
+import SplitHeading from './SplitHeading.astro'
+import Button from './Button.astro'
+import { site } from '../content/site'
+import { images, heroVideo } from '../content/images'
+const h = site.hero
+const poster = heroVideo ? (await getImage({ src: images.hero.src, width: 1600, format: 'webp' })).src : null
+---
+<section class="hero" id="top" aria-labelledby="hero-title">
+  <div class="hero__media" data-slot="hero" data-slot-brief={images.hero.brief} data-placeholder={images.hero.placeholder ? '' : undefined}>
+    <Pic name="hero" sizes="100vw" class="hero__img" priority />
+    {heroVideo && (
+      <video class="hero__video" muted loop playsinline preload="none" poster={poster} data-hero-video aria-hidden="true">
+        {heroVideo.webm && <source src={heroVideo.webm} type="video/webm" />}
+        {heroVideo.mp4 && <source src={heroVideo.mp4} type="video/mp4" />}
+      </video>
+    )}
+    <div class="hero__shade" aria-hidden="true"></div>
+  </div>
+
+  <div class="hero__content container">
+    <p class="eyebrow hero__eyebrow" data-hero-fade style="--i:0"><span class="eyebrow__rule" aria-hidden="true"></span>{h.eyebrow}</p>
+    <SplitHeading text={h.headline} as="h1" class="display display--hero hero__title" reveal="load" id="hero-title" />
+    <div class="hero__foot">
+      <p class="hero__text" data-hero-fade style="--i:1">{h.text}</p>
+      <div class="hero__actions">
+        <Button href={h.primary.href} variant="primary" data-hero-fade style="--i:2">{h.primary.label}</Button>
+        <Button href={h.secondary.href} variant="ghost" data-hero-fade style="--i:3">{h.secondary.label}</Button>
+      </div>
+    </div>
+  </div>
+
+  <p class="hero__side" aria-hidden="true" data-hero-fade style="--i:4">
+    <span class="hero__side-text">{h.sideLabel}</span><span class="hero__scroll-line"></span>
+  </p>
+</section>

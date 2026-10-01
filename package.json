@@ -1,0 +1,30 @@
+{
+  "name": "got-fitnezz-website",
+  "version": "3.0.0",
+  "private": true,
+  "description": "GOT FITNEZZ (Gears Of Thor), Palladam: cinematic static website",
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "placeholders": "node scripts/make-placeholders.mjs",
+    "qa": "node scripts/qa.mjs"
+  },
+  "dependencies": {
+    "@fontsource-variable/instrument-sans": "5.3.0",
+    "@fontsource/league-gothic": "5.3.0",
+    "astro": "7.3.5"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.10",
+    "@types/node": "22.20.4",
+    "playwright": "1.56.1",
+    "sharp": "0.35.5",
+    "typescript": "5.9.3"
+  }
+}

@@ -1,0 +1,59 @@
+---
+import { Image } from 'astro:assets'
+import logo from '../assets/brand/logo.png'
+import Icon from './Icon.astro'
+import { site } from '../content/site'
+---
+<div class="progress" aria-hidden="true"><span class="progress__bar"></span></div>
+<header class="header" data-header>
+  <div class="header__inner">
+    <a class="header__logo" href="#top" aria-label={`${site.brand.name} — back to top`}>
+      <Image src={logo} alt={site.brand.logoAlt} widths={[110, 220]} sizes="88px" loading="eager" class="header__logo-img" />
+    </a>
+
+    <nav class="header__nav" aria-label="Main">
+      <ul>
+        {site.nav.map((item) => (
+          <li><a class="link-line" href={item.href}>{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <a class="btn btn--primary btn--sm header__cta" href={site.navCta.href}>
+      <span class="btn__label">{site.navCta.label}</span>
+      <span class="btn__icon"><Icon name="arrow" /></span>
+    </a>
+
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu" data-menu-toggle>
+      <span class="menu-toggle__label" data-menu-label>Menu</span>
+      <span class="menu-toggle__bars" aria-hidden="true"><span></span><span></span></span>
+    </button>
+  </div>
+</header>
+
+<div class="menu" id="menu" data-menu hidden>
+  <div class="menu__panel">
+    <nav aria-label="Mobile">
+      <ol class="menu__list">
+        {site.nav.map((item, i) => (
+          <li style={`--i:${i}`}>
+            <a href={item.href} data-menu-link>
+              <span class="menu__num">{String(i + 1).padStart(2, '0')}</span>
+              <span class="menu__label">{item.label}</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </nav>
+    <div class="menu__foot" style={`--i:${site.nav.length}`}>
+      <a class="btn btn--primary" href={site.contact.phoneHref}>
+        <span class="btn__label">{site.contactSection.callLabel}</span>
+        <span class="btn__icon"><Icon name="phone" /></span>
+      </a>
+      <p class="menu__meta">
+        <a href={site.contact.instagramUrl} target="_blank" rel="noopener">{site.contact.instagramHandle}</a>
+        <span>{site.contact.address.street}, {site.contact.address.locality}</span>
+      </p>
+    </div>
+  </div>
+</div>

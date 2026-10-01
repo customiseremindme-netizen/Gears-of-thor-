@@ -1,0 +1,14 @@
+---
+/** Renders one line of text where *word* is shown in the accent colour. */
+interface Props { text: string }
+const parts: Array<{ text: string; accent: boolean }> = []
+let last = 0
+for (const m of Astro.props.text.matchAll(/\*([^*\n]+)\*/g)) {
+  const i = m.index ?? 0
+  if (i > last) parts.push({ text: Astro.props.text.slice(last, i), accent: false })
+  parts.push({ text: m[1], accent: true })
+  last = i + m[0].length
+}
+if (last < Astro.props.text.length) parts.push({ text: Astro.props.text.slice(last), accent: false })
+---
+{parts.map((p) => (p.accent ? <span class="accent">{p.text}</span> : p.text))}
